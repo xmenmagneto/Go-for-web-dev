@@ -6,6 +6,8 @@ import (
 	"html/template"
 	"database/sql"
 	_"github.com/mattn/go-sqlite3"
+
+	"encoding/json"
 )
 
 type Page struct {
@@ -45,6 +47,12 @@ func main() {
 			SearchResult{"The Adventures of Huckleberry Finn", "Mark Twain", "1884", "444444"},
 			SearchResult{"The Catcher in the Rye", "JD Salinger", "1951", "333333"},
 		}
+
+		encoder := json.NewEncoder(w)
+		if err := encoder.Encode(results); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
+
 	})
 
 	fmt.Println(http.ListenAndServe(":8080", nil))
