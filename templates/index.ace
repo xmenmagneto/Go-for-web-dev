@@ -69,7 +69,10 @@ html
       function deleteBook(pk) {
         $.ajax({
             method: "GET",
-            url: "/books/delete?pk=" + pk
+            url: "/books/delete?pk=" + pk,
+            success: function() {
+              $("#book-row-" + pk).remove();
+            }
         });
       }
       function showSearchPage() {
