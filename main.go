@@ -76,6 +76,7 @@ func main() {
 	initDb()
 	mux := gmux.NewRouter()
 
+	//  root route
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		template, err := ace.Load("templates/index", "",nil)
 		if err != nil {
@@ -131,20 +132,28 @@ func main() {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
 
-		result, err := db.Exec("insert into books (pk, title, author, id, classification) values (?, ?, ?, ?, ?)",
-								nil, book.BookData.Title, book.BookData.Author, book.BookData.ID,
-									book.Classification.MostPopular)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-		}
 
-		pk, _ := result.LastInsertId()
+
+		//result, err := db.Exec("insert into books (pk, title, author, id, classification) values (?, ?, ?, ?, ?)",
+		//						nil, book.BookData.Title, book.BookData.Author, book.BookData.ID,
+		//							book.Classification.MostPopular)
+		//if err != nil {
+		//	http.Error(w, err.Error(), http.StatusInternalServerError)
+		//}
+		//
+		//pk, _ := result.LastInsertId()
 		b := Book{
-			PK: int(pk),
+			PK: -1, //gorp will populate this value once the book is inserted into database
 			Title: book.BookData.Title,
 			Author: book.BookData.Author,
 			Classification: book.Classification.MostPopular,
 		}
+		//insert and populate b
+		if dbmap.Insert(&b); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
 		if err := json.NewEncoder(w).Encode(b); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
