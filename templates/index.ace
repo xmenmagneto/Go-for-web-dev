@@ -56,7 +56,7 @@ html
             th width="%5"
         tbody#view-results
           {{range .Books}}
-            tr
+            tr id="book-row-{{.PK}}"
               td {{.Title}}
               td {{.Author}}
               td {{.Classification}}
@@ -66,6 +66,12 @@ html
 
     script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"
     = javascript
+      function deleteBook(pk) {
+        $.ajax({
+            method: "GET",
+            url: "/books/delete?pk=" + pk
+        });
+      }
       function showSearchPage() {
         $("#search-page").show();
         $("#view-page").hide();
@@ -95,7 +101,7 @@ html
                   success: function(data) {
                     var book = JSON.parse(data);
                     if (!book) return;
-                    $("#view-results").append("<tr><td>" + book.Title + "</td><td>" + book.Author + "</td><td>" + book.Classification + "</td></tr>");
+                    $("#view-results").append("<tr id='book-row-" + book.PK + "'><td>" + book.Title + "</td><td>" + book.Author + "</td><td>" + book.Classification + "</td><td><button class='delete-btn' onclick='deleteBook(" + book.PK + ")'>Delete</button></td></tr>");
                   }
                 })
               })
