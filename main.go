@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"database/sql"
 	_"github.com/mattn/go-sqlite3"
+	"gopkg.in/gorp.v1"
 
 	"encoding/json"
 	"net/url"
@@ -17,10 +18,11 @@ import (
 )
 
 type Book struct {
-	PK int
-	Title string
-	Author string
-	Classification string
+	PK int64 `db:"pk"`
+	Title string `db:"title"`
+	Author string `db:"author"`
+	Classification string `db:"classification"`
+	ID string `db:"id"`
 }
 
 type Page struct {
@@ -50,6 +52,16 @@ type ClassifyBookResponse struct {
 }
 
 var db *sql.DB
+var dbmap *gorp.DbMap
+
+func initDb() {
+	db, _ = sql.Open("sqlite3", "dev.db")
+
+	dbmap = &gorp.DbMap{Db: db, Dialect: gorp.SqliteDialect{}}
+
+	dbmap.AddTableWithName(Book{}, "books").SetKeys(true,"pk")
+	dbmap.CreateTablesIfNotExists()
+}
 
 //  middleware to check database
 func verifyDababase(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
@@ -61,8 +73,7 @@ func verifyDababase(w http.ResponseWriter, r *http.Request, next http.HandlerFun
 }
 
 func main() {
-	db, _ = sql.Open("sqlite3", "dev.db")
-
+	initDb()
 	mux := gmux.NewRouter()
 
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
@@ -73,16 +84,19 @@ func main() {
 
 		p := Page{Books: []Book{}}
 		//  fetch all books in the database
-		rows, err := db.Query("select pk,title,author,classification from books")
-		if err != nil {
-			fmt.Print(err)
+		if _, err := dbmap.Select(&p.Books, "select * from books"); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
-
-		for rows.Next() {
-			var b Book
-			rows.Scan(&b.PK, &b.Title, &b.Author, &b.Classification)
-			p.Books = append(p.Books, b)
-		}
+		//rows, err := db.Query("select pk,title,author,classification from books")
+		//if err != nil {
+		//	fmt.Print(err)
+		//}
+		//
+		//for rows.Next() {
+		//	var b Book
+		//	rows.Scan(&b.PK, &b.Title, &b.Author, &b.Classification)
+		//	p.Books = append(p.Books, b)
+		//}
 
 		if err = template.Execute(w, p); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
