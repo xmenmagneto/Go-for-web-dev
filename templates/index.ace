@@ -2,7 +2,8 @@
 html
   head
     = css
-      #search-results tr:hover {
+      #search-results tr:hover,
+      #view-results tr:hover {
         background-color: lightgray;
         cursor: pointer;
       }
@@ -17,12 +18,21 @@ html
         margin: 1em;
         padding: .3em;
       }
+      #search-page {
+        display: none;
+      }
+      .delete-btn {
+        color: white;
+        background-color: #d9534f;
+        border-color: #d43f3a;
+        border-radius: 8px;
+      }
   body
     div#page-switcher
       button onclick="showViewPage()" View Library
       button onclick="showSearchPage()" Add Books
 
-    div#search-page style="display: none;"
+    div#search-page
       form id="search-form" onsubmit="return false"
         input name="search"
         input type="submit" value="Search" onclick="submitSearch()"
@@ -42,13 +52,16 @@ html
           tr style="text-align: left;"
             th width="45%" Title
             th width="35%" Author
-            th width="20%" Classification
+            th width="15%" Classification
+            th width="%5"
         tbody#view-results
           {{range .Books}}
             tr
               td {{.Title}}
               td {{.Author}}
               td {{.Classification}}
+              td
+                button.delete-btn onclick="deleteBook({{.PK}})" Delete
           {{end}}
 
     script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"
