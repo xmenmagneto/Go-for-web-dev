@@ -12,6 +12,7 @@ import (
 
 	"github.com/codegangsta/negroni"
 	"github.com/yosssi/ace"
+	gmux "github.com/gorilla/mux"
 	"fmt"
 )
 
@@ -62,7 +63,7 @@ func verifyDababase(w http.ResponseWriter, r *http.Request, next http.HandlerFun
 func main() {
 	db, _ = sql.Open("sqlite3", "dev.db")
 
-	mux := http.NewServeMux()
+	mux := gmux.NewRouter()
 
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		template, err := ace.Load("templates/index", "",nil)
@@ -87,7 +88,7 @@ func main() {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
 
-	})
+	}).Methods("GET")
 
 	mux.HandleFunc("/search", func(w http.ResponseWriter, r *http.Request){
 		var results []SearchResult
@@ -102,7 +103,7 @@ func main() {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
 
-	})
+	}).Methods("POST")
 
 
 	mux.HandleFunc("/books/add", func(w http.ResponseWriter, r *http.Request) {
@@ -130,7 +131,7 @@ func main() {
 		if err := json.NewEncoder(w).Encode(b); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
-	})
+	}).Methods("PUT")
 
 	mux.HandleFunc("/books/delete", func(w http.ResponseWriter, r *http.Request) {
 		if _, err := db.Exec("delete from books where pk=?", r.FormValue("pk")); err != nil {
@@ -138,7 +139,7 @@ func main() {
 			return
 		}
 		w.WriteHeader(http.StatusOK)
-	})
+	}).Methods("DELETE")
 
 	n := negroni.Classic()
 	n.Use(negroni.HandlerFunc(verifyDababase))
