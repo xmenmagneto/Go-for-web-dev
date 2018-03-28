@@ -49,10 +49,11 @@ func main() {
 	})
 
 	http.HandleFunc("/search", func(w http.ResponseWriter, r *http.Request){
-		results := []SearchResult{
-			SearchResult{"Moby-Dick", "Herman Melville", "1851", "222222"},
-			SearchResult{"The Adventures of Huckleberry Finn", "Mark Twain", "1884", "444444"},
-			SearchResult{"The Catcher in the Rye", "JD Salinger", "1951", "333333"},
+		var results []SearchResult
+		var err error
+
+		if results, err = search(r.FormValue("search")); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError))
 		}
 
 		encoder := json.NewEncoder(w)
