@@ -113,10 +113,21 @@ func main() {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
 
-		_, err = db.Exec("insert into books (pk, title, author, id, classification) values (?, ?, ?, ?, ?)",
+		result, err := db.Exec("insert into books (pk, title, author, id, classification) values (?, ?, ?, ?, ?)",
 								nil, book.BookData.Title, book.BookData.Author, book.BookData.ID,
 									book.Classification.MostPopular)
 		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+		}
+
+		pk, _ := result.LastInsertId()
+		b := Book{
+			PK: int(pk),
+			Title: book.BookData.Title,
+			Author: book.BookData.Author,
+			Classification: book.Classification.MostPopular,
+		}
+		if err := json.NewEncoder(w).Encode(b); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
 	})

@@ -15,12 +15,12 @@ html
         font-size: 24px;
         font-weight: bold;
         margin: 1em;
-        padding: 3em;
+        padding: .3em;
       }
   body
     div#page-switcher
-      button onClick="showViewPage()" View Library
-      button onClick="showSearchPage()" Add Books
+      button onclick="showViewPage()" View Library
+      button onclick="showSearchPage()" Add Books
 
     div#search-page style="display: none;"
       form id="search-form" onsubmit="return false"
@@ -78,7 +78,12 @@ html
               row.on("click", function() {
                 $.ajax({
                   url: "/books/add?id=" + result.ID,
-                  method: "GET"
+                  method: "GET",
+                  success: function(data) {
+                    var book = JSON.parse(data);
+                    if (!book) return;
+                    $("#view-results").append("<tr><td>" + book.Title + "</td><td>" + book.Author + "</td><td>" + book.Classification + "</td></tr>");
+                  }
                 })
               })
             })
