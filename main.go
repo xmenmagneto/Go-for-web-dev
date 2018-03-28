@@ -12,6 +12,7 @@ import (
 
 	"github.com/codegangsta/negroni"
 	"github.com/yosssi/ace"
+	"fmt"
 )
 
 type Book struct {
@@ -71,7 +72,11 @@ func main() {
 
 		p := Page{Books: []Book{}}
 		//  fetch all books in the database
-		rows, _ := db.Query("select pk,title,author,classification from books")
+		rows, err := db.Query("select pk,title,author,classification from books")
+		if err != nil {
+			fmt.Print(err)
+		}
+
 		for rows.Next() {
 			var b Book
 			rows.Scan(&b.PK, &b.Title, &b.Author, &b.Classification)
