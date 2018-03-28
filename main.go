@@ -31,7 +31,7 @@ type ClassifySearchResponse struct {
 
 type ClassifyBookResponse struct {
 	BookData struct {
-		Title string `xml:"title:attr"`
+		Title string `xml:"title,attr"`
 		Author string `xml:"author,attr"`
 		ID string `xml:"owi,attr"`
 	} `xml:"work"`
@@ -82,12 +82,14 @@ func main() {
 		if book, err = find(r.FormValue("id")); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
-		if err = db.Ping(); err != nil {
+		fmt.Println(book)
+		if err = db.Ping(); err != nil { //make sure database connection is still valid
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
 
 		_, err = db.Exec("insert into books (pk, title, author, id, classification) values (?, ?, ?, ?, ?)",
-								nil, book.BookData.Title, book.BookData.Author, book.BookData.ID, book.Classification.MostPopular)
+								nil, book.BookData.Title, book.BookData.Author, book.BookData.ID,
+									book.Classification.MostPopular)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
