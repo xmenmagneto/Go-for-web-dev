@@ -53,7 +53,7 @@ func main() {
 		var err error
 
 		if results, err = search(r.FormValue("search")); err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError))
+			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
 
 		encoder := json.NewEncoder(w)
