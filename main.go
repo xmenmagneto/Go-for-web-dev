@@ -90,6 +90,8 @@ func main() {
 
 	}).Methods("GET")
 
+
+	//  search books route
 	mux.HandleFunc("/search", func(w http.ResponseWriter, r *http.Request){
 		var results []SearchResult
 		var err error
@@ -106,7 +108,8 @@ func main() {
 	}).Methods("POST")
 
 
-	mux.HandleFunc("/books/add", func(w http.ResponseWriter, r *http.Request) {
+	//  add book route
+	mux.HandleFunc("/books", func(w http.ResponseWriter, r *http.Request) {
 		var book ClassifyBookResponse
 		var err error
 
@@ -133,8 +136,9 @@ func main() {
 		}
 	}).Methods("PUT")
 
-	mux.HandleFunc("/books/delete", func(w http.ResponseWriter, r *http.Request) {
-		if _, err := db.Exec("delete from books where pk=?", r.FormValue("pk")); err != nil {
+	//  delete book route
+	mux.HandleFunc("/books/{pk}", func(w http.ResponseWriter, r *http.Request) {
+		if _, err := db.Exec("delete from books where pk=?", gmux.Vars(r)["pk"]); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
@@ -180,7 +184,6 @@ func classifyAPI(url string) ([]byte, error) {
 	if resp, err = http.Get(url); err != nil {
 		return []byte{}, err
 	}
-
 	defer resp.Body.Close()
 
 	return ioutil.ReadAll(resp.Body)
