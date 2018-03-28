@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 	"html/template"
 	"database/sql"
@@ -42,10 +41,21 @@ type ClassifyBookResponse struct {
 	} `xml:"recommendations>ddc>mostPopular"`
 }
 
+var db *sql.DB
+
+//  middleware to check database
+func verifyDababase(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
+	if err := db.Ping(); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	next(w, r)
+}
+
 func main() {
 	templates := template.Must(template.ParseFiles("templates/index.html"))
 
-	db, _ := sql.Open("sqlite3", "dev.db")
+	db, _ = sql.Open("sqlite3", "dev.db")
 
 	mux := http.NewServeMux()
 
@@ -86,10 +96,6 @@ func main() {
 		if book, err = find(r.FormValue("id")); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
-		fmt.Println(book)
-		if err = db.Ping(); err != nil { //make sure database connection is still valid
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-		}
 
 		_, err = db.Exec("insert into books (pk, title, author, id, classification) values (?, ?, ?, ?, ?)",
 								nil, book.BookData.Title, book.BookData.Author, book.BookData.ID,
@@ -100,8 +106,8 @@ func main() {
 	})
 
 	n := negroni.Classic()
+	n.Use(negroni.HandlerFunc(verifyDababase))
 	n.UseHandler(mux)
-
 	n.Run(":8080")
 	//fmt.Println(http.ListenAndServe(":8080", nil))
 }
