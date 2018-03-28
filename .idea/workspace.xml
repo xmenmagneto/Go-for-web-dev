@@ -17,13 +17,12 @@
       <file leaf-file-name="main.go" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="296">
-              <caret line="153" column="18" lean-forward="false" selection-start-line="153" selection-start-column="18" selection-end-line="153" selection-end-column="18" />
+            <state relative-caret-position="240">
+              <caret line="16" column="33" lean-forward="false" selection-start-line="16" selection-start-column="33" selection-end-line="16" selection-end-column="33" />
               <folding>
-                <element signature="e#14#260#0" expanded="true" />
-                <marker date="1522278487000" expanded="true" signature="1980:2028" ph="select pk,ti... books" />
-                <marker date="1522278487000" expanded="true" signature="3098:3178" ph="insert into books... " />
-                <marker date="1522278487000" expanded="true" signature="4052:4080" ph="delete from books... " />
+                <marker date="1522279933000" expanded="true" signature="1984:2032" ph="select pk,ti... books" />
+                <marker date="1522279933000" expanded="true" signature="3102:3182" ph="insert into books... " />
+                <marker date="1522279933000" expanded="true" signature="4188:4216" ph="delete from books... " />
               </folding>
             </state>
           </provider>
@@ -90,8 +89,8 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="483" />
-    <option name="y" value="24" />
+    <option name="x" value="340" />
+    <option name="y" value="23" />
     <option name="width" value="1237" />
     <option name="height" value="709" />
   </component>
@@ -272,16 +271,15 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1522190126164</updated>
-      <workItem from="1522190132438" duration="24711000" />
+      <workItem from="1522190132438" duration="25704000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="24711000" />
+    <option name="totallyTimeSpent" value="25704000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="483" y="24" width="1237" height="709" extended-state="0" />
-    <editor active="true" />
+    <frame x="340" y="23" width="1237" height="709" extended-state="0" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -292,7 +290,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26872963" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26872963" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.011715481" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -358,13 +356,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="153" column="18" lean-forward="false" selection-start-line="153" selection-start-column="18" selection-end-line="153" selection-end-column="18" />
+        <state relative-caret-position="240">
+          <caret line="16" column="33" lean-forward="false" selection-start-line="16" selection-start-column="33" selection-end-line="16" selection-end-column="33" />
           <folding>
-            <element signature="e#14#260#0" expanded="true" />
-            <marker date="1522278487000" expanded="true" signature="1980:2028" ph="select pk,ti... books" />
-            <marker date="1522278487000" expanded="true" signature="3098:3178" ph="insert into books... " />
-            <marker date="1522278487000" expanded="true" signature="4052:4080" ph="delete from books... " />
+            <marker date="1522279933000" expanded="true" signature="1984:2032" ph="select pk,ti... books" />
+            <marker date="1522279933000" expanded="true" signature="3102:3182" ph="insert into books... " />
+            <marker date="1522279933000" expanded="true" signature="4188:4216" ph="delete from books... " />
           </folding>
         </state>
       </provider>

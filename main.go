@@ -10,11 +10,11 @@ import (
 	"net/url"
 	"io/ioutil"
 	"encoding/xml"
+	"strconv"
 
 	"github.com/codegangsta/negroni"
 	"github.com/yosssi/ace"
 	gmux "github.com/gorilla/mux"
-	"fmt"
 )
 
 type Book struct {
@@ -161,10 +161,14 @@ func main() {
 
 	//  delete book route
 	mux.HandleFunc("/books/{pk}", func(w http.ResponseWriter, r *http.Request) {
-		if _, err := db.Exec("delete from books where pk=?", gmux.Vars(r)["pk"]); err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
+		pk, _ := strconv.ParseInt(gmux.Vars(r)["pk"], 10, 64)
+		if _, err := dbmap.Delete(&Book{pk, "", "", "", ""}); err != nil {
+
 		}
+		//if _, err := db.Exec("delete from books where pk=?", gmux.Vars(r)["pk"]); err != nil {
+		//	http.Error(w, err.Error(), http.StatusInternalServerError)
+		//	return
+		//}
 		w.WriteHeader(http.StatusOK)
 	}).Methods("DELETE")
 
