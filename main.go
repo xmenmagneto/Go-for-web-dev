@@ -127,6 +127,7 @@ func main() {
 			if err := dbmap.Insert(&user); err != nil {
    				p.Error = err.Error()
 			} else { // register successfully
+				sessions.GetSession(r).Set("User", user.Username)
 				http.Redirect(w, r, "/", http.StatusFound)
 				return
 			}
@@ -142,6 +143,7 @@ func main() {
 				if err = bcrypt.CompareHashAndPassword(u.Secret, []byte(r.FormValue("password"))); err != nil {
 					p.Error = err.Error()
 				} else {  //authenticated successfully
+					sessions.GetSession(r).Set("User", u.Username)
 					http.Redirect(w, r, "/", http.StatusFound)
 					return
 				}
