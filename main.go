@@ -3,15 +3,18 @@ package main
 import (
 	"database/sql"
 	_ "github.com/mattn/go-sqlite3"
+	_"github.com/lib/pq"
 	"gopkg.in/gorp.v1"
 	"net/http"
 
 	"encoding/json"
 	"encoding/xml"
 	"golang.org/x/crypto/bcrypt"
+	"os"
 	"io/ioutil"
 	"net/url"
 	"strconv"
+
 
 	"github.com/goincremental/negroni-sessions"
 	"github.com/goincremental/negroni-sessions/cookiestore"
@@ -66,9 +69,14 @@ var db *sql.DB
 var dbmap *gorp.DbMap
 
 func initDb() {
-	db, _ = sql.Open("sqlite3", "dev.db")
+	if os.Getenv("ENV") != "production" {  //not in production mode, use sqlite
+		db, _ = sql.Open("sqlite3", "dev.db")
+		dbmap = &gorp.DbMap{Db: db, Dialect: gorp.SqliteDialect{}}
+	} else {  //use PostgreSQL for production mode
+		db, _  := sql.Open("postgres", os.Getenv("DATABASE_URL"))
+		dbmap = &gorp.DbMap{Db: db, Dialect: gorp.PostgresDialect{}}
+	}
 
-	dbmap = &gorp.DbMap{Db: db, Dialect: gorp.SqliteDialect{}}
 
 	dbmap.AddTableWithName(Book{}, "books").SetKeys(true, "pk")
 	dbmap.AddTableWithName(User{}, "users").SetKeys(false, "username")
