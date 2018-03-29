@@ -76,6 +76,27 @@ func main() {
 	initDb()
 	mux := gmux.NewRouter()
 
+	//  sort route
+	mux.HandleFunc("/books", func(w http.ResponseWriter, r *http.Request) {
+		columnName := r.FormValue("sortBy")
+		if columnName != "title" && columnName != "author" && columnName != "classification" {
+			http.Error(w, "Invalid column name", http.StatusInternalServerError)
+			return
+		}
+
+		var b []Book
+		if _, err := dbmap.Select(&b, "select * from books order by " + columnName); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		if err := json.NewEncoder(w).Encode(b); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+	}).Methods("GET")
+
 	//  root route
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		template, err := ace.Load("templates/index", "",nil)
