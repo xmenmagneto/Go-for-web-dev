@@ -293,6 +293,8 @@ func main() {
 			Title: book.BookData.Title,
 			Author: book.BookData.Author,
 			Classification: book.Classification.MostPopular,
+			ID: r.FormValue("id"),
+			User: getStringFromSession(r, "User"),
 		}
 		//insert and populate b
 		if dbmap.Insert(&b); err != nil {
