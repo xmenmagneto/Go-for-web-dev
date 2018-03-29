@@ -30,6 +30,7 @@ type Book struct {
 
 type Page struct {
 	Books []Book
+	Filter string
 }
 
 type SearchResult struct {
@@ -151,7 +152,7 @@ func main() {
 
 		p := Page{Books: []Book{}}
 		//  sort the book collection by sorting preference from session
-		if !getBookCollections(&p.Books, getStringFromSession(r, "sortBy"), w) {
+		if !getBookCollections(&p.Books, getStringFromSession(r, "sortBy"), getStringFromSession(r, "Filter"), w) {
 			return
 		}
 
