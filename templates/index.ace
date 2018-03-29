@@ -51,9 +51,9 @@ html
       table width="100%"
         thead
           tr style="text-align: left;"
-            th width="45%" Title
-            th width="35%" Author
-            th width="15%" Classification
+            th width="45%" onclick="sortBooks('title')" Title
+            th width="35%" onclick="sortBooks('author')" Author
+            th width="15%" onclick="sortBooks('classification')" Classification
             th width="%5"
         tbody#view-results
           {{range .Books}}
