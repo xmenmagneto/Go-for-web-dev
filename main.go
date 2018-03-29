@@ -12,11 +12,13 @@ import (
 	"encoding/xml"
 	"strconv"
 
-	"github.com/codegangsta/negroni"
+	//"github.com/codegangsta/negroni"
+	"github.com/urfave/negroni"
 	"github.com/goincremental/negroni-sessions"
 	"github.com/goincremental/negroni-sessions/cookiestore"
 	"github.com/yosssi/ace"
 	gmux "github.com/gorilla/mux"
+	"fmt"
 )
 
 type Book struct {
@@ -66,7 +68,7 @@ func initDb() {
 }
 
 //  middleware to check database
-func verifyDababase(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
+func verifyDatabase(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 	if err := db.Ping(); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -77,7 +79,7 @@ func verifyDababase(w http.ResponseWriter, r *http.Request, next http.HandlerFun
 //  implement initial sort
 func getBookCollections(books *[]Book, sortCol string, w http.ResponseWriter) bool {
 	if sortCol != "title" && sortCol != "author" && sortCol != "classification" {
-		sortCol = "pk" //set to default sorting
+		sortCol = "pk" //set to default sorting by PK
 	}
 	if _, err := dbmap.Select(books, "select * from books order by " + sortCol); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -97,8 +99,8 @@ func main() {
 			return
 		}
 
-		//store the sort preference in session
-		sessions.GetSession(r).Set("SortBy", r.FormValue("sortBy"))
+		//  store the sort preference in session
+		//sessions.GetSession(r).Set("SortBy", r.FormValue("sortBy"))
 		if err := json.NewEncoder(w).Encode(b); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
@@ -113,21 +115,29 @@ func main() {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
 
-		p := Page{Books: []Book{}}
-		//  fetch all books in the database
-		if _, err := dbmap.Select(&p.Books, "select * from books"); err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-		}
-		//rows, err := db.Query("select pk,title,author,classification from books")
-		//if err != nil {
-		//	fmt.Print(err)
+		//var sortColumn string
+		////  get sort preference from session
+		//if sortBy := sessions.GetSession(r).Get("SortBy"); sortBy != nil {
+		//	sortColumn = sortBy.(string)
 		//}
 		//
-		//for rows.Next() {
-		//	var b Book
-		//	rows.Scan(&b.PK, &b.Title, &b.Author, &b.Classification)
-		//	p.Books = append(p.Books, b)
+		p := Page{Books: []Book{}}
+		////  sort the book collection by sorting preference from session
+		//if !getBookCollections(&p.Books, sortColumn, w) {
+		//	return
 		//}
+
+
+		rows, err := db.Query("select pk,title,author,classification from books")
+		if err != nil {
+			fmt.Print(err)
+		}
+
+		for rows.Next() {
+			var b Book
+			rows.Scan(&b.PK, &b.Title, &b.Author, &b.Classification)
+			p.Books = append(p.Books, b)
+		}
 
 		if err = template.Execute(w, p); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -204,7 +214,7 @@ func main() {
 
 	n := negroni.Classic()
 	n.Use(sessions.Sessions("go-for-web-dev", cookiestore.New([]byte("my-secret-123"))))
-	n.Use(negroni.HandlerFunc(verifyDababase))
+	n.Use(negroni.HandlerFunc(verifyDatabase))
 	n.UseHandler(mux)
 	n.Run(":8080")
 	//fmt.Println(http.ListenAndServe(":8080", nil))
