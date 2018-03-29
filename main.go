@@ -13,6 +13,8 @@ import (
 	"strconv"
 
 	"github.com/codegangsta/negroni"
+	"github.com/goincremental/negroni-sessions"
+	"github.com/goincremental/negroni-sessions/cookiestore"
 	"github.com/yosssi/ace"
 	gmux "github.com/gorilla/mux"
 )
@@ -90,6 +92,7 @@ func main() {
 			return
 		}
 
+		sessions.GetSession(r).Set("SortBy", r.FormValue("sortBy"))
 		if err := json.NewEncoder(w).Encode(b); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
@@ -194,6 +197,7 @@ func main() {
 	}).Methods("DELETE")
 
 	n := negroni.Classic()
+	n.Use(sessions.Sessions("go-for-web-dev", cookiestore.New([]byte("my-secret-123"))))
 	n.Use(negroni.HandlerFunc(verifyDababase))
 	n.UseHandler(mux)
 	n.Run(":8080")
