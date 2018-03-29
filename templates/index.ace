@@ -73,6 +73,9 @@ html
 
     script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"
     = javascript
+      $(document).ready(function() {
+        $("#filter-view-results option[value='" + {{.Filter}} + "']").prop("selected", true);
+      })
       function filterViewResults() {
         $.ajax({
           method: "GET",

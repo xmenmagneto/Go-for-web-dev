@@ -150,7 +150,7 @@ func main() {
 
 
 
-		p := Page{Books: []Book{}}
+		p := Page{Books: []Book{}, Filter: getStringFromSession(r, "Filter")}
 		//  sort the book collection by sorting preference from session
 		if !getBookCollections(&p.Books, getStringFromSession(r, "sortBy"), getStringFromSession(r, "Filter"), w) {
 			return
