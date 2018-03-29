@@ -101,18 +101,18 @@ func verifyUser(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
 }
 
 //  implement initial sort
-func getBookCollections(books *[]Book, sortCol string, filterByClass string, w http.ResponseWriter) bool {
+func getBookCollections(books *[]Book, sortCol string, filterByClass string, username string, w http.ResponseWriter) bool {
 	if sortCol == "" {
 		sortCol = "pk" //set to default sorting by PK
 	}
-	var where string
+	where := " where user=?"
 	if filterByClass == "fiction" {
-		where = " where classification between '800' and '900'"
+		where += " and classification between '800' and '900'"
 	} else if filterByClass == "nonfiction" {
-		where = " where classification not between '800' and '900'"
+		where += " and classification not between '800' and '900'"
 	}
 
-	if _, err := dbmap.Select(books, "select * from books" + where + " order by " + sortCol); err != nil {
+	if _, err := dbmap.Select(books, "select * from books" + where + " order by " + sortCol, username); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return false
 	}
@@ -189,7 +189,8 @@ func main() {
 	mux.HandleFunc("/books", func(w http.ResponseWriter, r *http.Request) {
 		var b []Book
 		//  pass default sort preference to sort
-		if !getBookCollections(&b, getStringFromSession(r, "sortBy"), r.FormValue("filter"), w) {
+		if !getBookCollections(&b, getStringFromSession(r, "sortBy"), r.FormValue("filter"),
+			getStringFromSession(r, "User"), w) {
 			return
 		}
 
@@ -205,7 +206,8 @@ func main() {
 	//  sort route
 	mux.HandleFunc("/books", func(w http.ResponseWriter, r *http.Request) {
 		var b []Book
-		if !getBookCollections(&b, r.FormValue("sortBy"), getStringFromSession(r, "Filter"), w) {
+		if !getBookCollections(&b, r.FormValue("sortBy"), getStringFromSession(r, "Filter"),
+			getStringFromSession(r, "User"), w) {
 			return
 		}
 
@@ -229,21 +231,10 @@ func main() {
 
 		p := Page{Books: []Book{}, Filter: getStringFromSession(r, "Filter"), User: getStringFromSession(r, "User")}
 		//  sort the book collection by sorting preference from session
-		if !getBookCollections(&p.Books, getStringFromSession(r, "sortBy"), getStringFromSession(r, "Filter"), w) {
+		if !getBookCollections(&p.Books, getStringFromSession(r, "sortBy"), getStringFromSession(r, "Filter"),
+			p.User, w) {
 			return
 		}
-
-
-		//rows, err := db.Query("select pk,title,author,classification from books")
-		//if err != nil {
-		//	fmt.Print(err)
-		//}
-		//
-		//for rows.Next() {
-		//	var b Book
-		//	rows.Scan(&b.PK, &b.Title, &b.Author, &b.Classification)
-		//	p.Books = append(p.Books, b)
-		//}
 
 		if err = template.Execute(w, p); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
