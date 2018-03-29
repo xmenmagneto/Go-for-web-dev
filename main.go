@@ -127,7 +127,7 @@ func main() {
 	//  sort route
 	mux.HandleFunc("/books", func(w http.ResponseWriter, r *http.Request) {
 		var b []Book
-		if !getBookCollections(&b, r.FormValue("sortBy"), w) {
+		if !getBookCollections(&b, r.FormValue("sortBy"), getStringFromSession(r, "Filter"), w) {
 			return
 		}
 

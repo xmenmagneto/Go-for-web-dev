@@ -17,11 +17,11 @@
       <file leaf-file-name="main.go" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="147">
-              <caret line="115" column="9" lean-forward="true" selection-start-line="115" selection-start-column="9" selection-end-line="115" selection-end-column="9" />
+            <state relative-caret-position="264">
+              <caret line="129" column="93" lean-forward="false" selection-start-line="129" selection-start-column="93" selection-end-line="129" selection-end-column="93" />
               <folding>
                 <element signature="e#14#397#0" expanded="true" />
-                <marker date="1522340387000" expanded="true" signature="3994:4042" ph="select pk,ti... books" />
+                <marker date="1522340435000" expanded="true" signature="4029:4077" ph="select pk,ti... books" />
               </folding>
             </state>
           </provider>
@@ -81,10 +81,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="84" />
-    <option name="y" value="286" />
+    <option name="x" value="142" />
+    <option name="y" value="23" />
     <option name="width" value="1111" />
-    <option name="height" value="520" />
+    <option name="height" value="709" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -264,15 +264,15 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1522190126164</updated>
-      <workItem from="1522190132438" duration="34395000" />
+      <workItem from="1522190132438" duration="34444000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="34395000" />
+    <option name="totallyTimeSpent" value="34444000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="84" y="286" width="1111" height="520" extended-state="0" />
+    <frame x="142" y="23" width="1111" height="709" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -284,7 +284,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20235294" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14006515" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.013096352" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -358,11 +358,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="115" column="9" lean-forward="true" selection-start-line="115" selection-start-column="9" selection-end-line="115" selection-end-column="9" />
+        <state relative-caret-position="264">
+          <caret line="129" column="93" lean-forward="false" selection-start-line="129" selection-start-column="93" selection-end-line="129" selection-end-column="93" />
           <folding>
             <element signature="e#14#397#0" expanded="true" />
-            <marker date="1522340387000" expanded="true" signature="3994:4042" ph="select pk,ti... books" />
+            <marker date="1522340435000" expanded="true" signature="4029:4077" ph="select pk,ti... books" />
           </folding>
         </state>
       </provider>
