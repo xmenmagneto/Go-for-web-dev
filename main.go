@@ -37,6 +37,7 @@ type User struct {
 type Page struct {
 	Books []Book
 	Filter string
+	User string  //let UI know which user logged in
 }
 
 type SearchResult struct {
@@ -113,6 +114,10 @@ func getStringFromSession(r *http.Request, key string) string {
 
 //  middleware to check user session is always set before allowing users to enter main page
 func verifyUser(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
+	if r.URL.Path == "/login" {  // avoid redirect loop
+		next(w, r)
+		return
+	}
 	if username := getStringFromSession(r, "User"); username != "" {
 		if user, _ := dbmap.Get(User{}, username); user != nil {
 			next(w, r)
@@ -213,7 +218,7 @@ func main() {
 
 
 
-		p := Page{Books: []Book{}, Filter: getStringFromSession(r, "Filter")}
+		p := Page{Books: []Book{}, Filter: getStringFromSession(r, "Filter"), User: getStringFromSession(r, "User")}
 		//  sort the book collection by sorting preference from session
 		if !getBookCollections(&p.Books, getStringFromSession(r, "sortBy"), getStringFromSession(r, "Filter"), w) {
 			return
