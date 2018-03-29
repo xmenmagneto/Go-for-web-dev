@@ -87,9 +87,34 @@ func getBookCollections(books *[]Book, sortCol string, w http.ResponseWriter) bo
 	return true
 }
 
+func getStringFromSession(r *http.Request, key string) string {
+	var strVal string
+	//  get preference from session
+	if val := sessions.GetSession(r).Get(key); val != nil {
+		strVal = val.(string)
+	}
+	return strVal
+}
+
 func main() {
 	initDb()
 	mux := gmux.NewRouter()
+
+	//  filter route
+	mux.HandleFunc("/books", func(w http.ResponseWriter, r *http.Request) {
+		var b []Book
+		if !getBookCollections(&b, r.FormValue("sortBy"), w) {
+			return
+		}
+
+		//  store the sort preference in session
+		sessions.GetSession(r).Set("SortBy", r.FormValue("sortBy"))
+		if err := json.NewEncoder(w).Encode(b); err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+	}).Methods("GET").Queries("filter", "{filter:all|fiction|nonfiction}")
 
 	//  sort route
 	mux.HandleFunc("/books", func(w http.ResponseWriter, r *http.Request) {
@@ -105,7 +130,7 @@ func main() {
 			return
 		}
 
-	}).Methods("GET")
+	}).Methods("GET").Queries("sortBy", "{sortBy:title|author|classification}")
 
 	//  root route
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
@@ -114,11 +139,7 @@ func main() {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
 
-		var sortColumn string
-		//  get sort preference from session
-		if sortBy := sessions.GetSession(r).Get("SortBy"); sortBy != nil {
-			sortColumn = sortBy.(string)
-		}
+
 
 		p := Page{Books: []Book{}}
 		//  sort the book collection by sorting preference from session
