@@ -111,12 +111,12 @@ func main() {
 	mux.HandleFunc("/books", func(w http.ResponseWriter, r *http.Request) {
 		var b []Book
 		//  pass default sort preference to sort
-		if !getBookCollections(&b, getStringFromSession(r, "sortBy"), w) {
+		if !getBookCollections(&b, getStringFromSession(r, "sortBy"), r.FormValue("filter"), w) {
 			return
 		}
 
 		//  store the sort preference in session
-		sessions.GetSession(r).Set("SortBy", r.FormValue("sortBy"))
+		sessions.GetSession(r).Set("Filter", r.FormValue("filter"))
 		if err := json.NewEncoder(w).Encode(b); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
