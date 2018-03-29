@@ -1,0 +1,73 @@
+{
+	"ImportPath": "github.com/xmenmagneto/go-for-web-dev",
+	"GoVersion": "go1.10",
+	"GodepVersion": "v80",
+	"Deps": [
+		{
+			"ImportPath": "github.com/goincremental/negroni-sessions",
+			"Rev": "40b49004abeec57f602bad8509521a865b2be95e"
+		},
+		{
+			"ImportPath": "github.com/goincremental/negroni-sessions/cookiestore",
+			"Rev": "40b49004abeec57f602bad8509521a865b2be95e"
+		},
+		{
+			"ImportPath": "github.com/gorilla/context",
+			"Comment": "v1.1-7-g08b5f42",
+			"Rev": "08b5f424b9271eedf6f9f0ce86cb9396ed337a42"
+		},
+		{
+			"ImportPath": "github.com/gorilla/mux",
+			"Comment": "v1.6.1-13-g4dbd923",
+			"Rev": "4dbd923b0c9e99ff63ad54b0e9705ff92d3cdb06"
+		},
+		{
+			"ImportPath": "github.com/gorilla/securecookie",
+			"Comment": "v1.1.1",
+			"Rev": "e59506cc896acb7f7bf732d4fdf5e25f7ccd8983"
+		},
+		{
+			"ImportPath": "github.com/gorilla/sessions",
+			"Comment": "v1.1-15-ga2f2a3d",
+			"Rev": "a2f2a3de9a4a575047f73e3e36bc85ecc3546391"
+		},
+		{
+			"ImportPath": "github.com/lib/pq",
+			"Comment": "go1.0-cutoff-210-gd34b9ff",
+			"Rev": "d34b9ff171c21ad295489235aec8b6626023cd04"
+		},
+		{
+			"ImportPath": "github.com/lib/pq/oid",
+			"Comment": "go1.0-cutoff-210-gd34b9ff",
+			"Rev": "d34b9ff171c21ad295489235aec8b6626023cd04"
+		},
+		{
+			"ImportPath": "github.com/mattn/go-sqlite3",
+			"Comment": "v1.6.0-20-g9101028",
+			"Rev": "9101028e5ca824d2baf0fbd91b9700e2669a6cd9"
+		},
+		{
+			"ImportPath": "github.com/urfave/negroni",
+			"Comment": "v0.3.0-13-g22c5532",
+			"Rev": "22c5532ea862c34fdad414e90f8cc00b4f6f4cab"
+		},
+		{
+			"ImportPath": "github.com/yosssi/ace",
+			"Comment": "v0.0.5",
+			"Rev": "ea038f4770b6746c3f8f84f14fa60d9fe1205b56"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/bcrypt",
+			"Rev": "88942b9c40a4c9d203b82b3731787b672d6e809b"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/blowfish",
+			"Rev": "88942b9c40a4c9d203b82b3731787b672d6e809b"
+		},
+		{
+			"ImportPath": "gopkg.in/gorp.v1",
+			"Comment": "v1.7.1",
+			"Rev": "c87af80f3cc5036b55b83d77171e156791085e2e"
+		}
+	]
+}

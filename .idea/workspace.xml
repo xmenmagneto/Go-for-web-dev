@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0ddabfab-3269-4a11-a586-739bccd16d3c" name="Default" comment="">
+      <change beforePath="" afterPath="$PROJECT_DIR$/Procfile" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/templates/index.ace" afterPath="$PROJECT_DIR$/templates/index.ace" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -26,11 +26,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.ace" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.ace" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/index.ace">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="138">
-              <caret line="79" column="39" lean-forward="false" selection-start-line="79" selection-start-column="39" selection-end-line="79" selection-end-column="39" />
+            <state relative-caret-position="1125">
+              <caret line="75" column="16" lean-forward="false" selection-start-line="75" selection-start-column="16" selection-end-line="75" selection-end-column="16" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Godeps.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Godeps/Godeps.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="165">
+              <caret line="11" column="53" lean-forward="false" selection-start-line="11" selection-start-column="53" selection-end-line="11" selection-end-column="53" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Procfile" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Procfile">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -73,6 +93,7 @@
         <option value="$PROJECT_DIR$/models/user.go" />
         <option value="$PROJECT_DIR$/main.go" />
         <option value="$PROJECT_DIR$/templates/index.ace" />
+        <option value="$PROJECT_DIR$/Procfile" />
       </list>
     </option>
   </component>
@@ -122,6 +143,11 @@
             <path>
               <item name="go-for-web-dev" type="b2602c69:ProjectViewProjectNode" />
               <item name="go-for-web-dev" type="462c0819:PsiDirectoryNode" />
+              <item name="Godeps" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="go-for-web-dev" type="b2602c69:ProjectViewProjectNode" />
+              <item name="go-for-web-dev" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -140,6 +166,7 @@
     <property name="DefaultGoTemplateProperty" value="Go File" />
     <property name="settings.editor.selected.configurable" value="configurable.group.tools" />
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file:///Users/tingchangdeng/Documents/goworkspace/src/github.com/xmenmagneto/go-for-web-dev/templates/index.ace" />
+    <property name="go.vendoring.notification.had.been.shown" value="true" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -266,15 +293,16 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1522190126164</updated>
-      <workItem from="1522190132438" duration="43635000" />
+      <workItem from="1522190132438" duration="44384000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="43635000" />
+    <option name="totallyTimeSpent" value="44384000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="458" y="23" width="1012" height="709" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -285,7 +313,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22149837" sideWeight="0.49587628" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22149837" sideWeight="0.49587628" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16185567" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -385,8 +413,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/index.ace">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="79" column="39" lean-forward="false" selection-start-line="79" selection-start-column="39" selection-end-line="79" selection-end-column="39" />
+        <state relative-caret-position="1125">
+          <caret line="75" column="16" lean-forward="false" selection-start-line="75" selection-start-column="16" selection-end-line="75" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Godeps/Godeps.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="53" lean-forward="false" selection-start-line="11" selection-start-column="53" selection-end-line="11" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Procfile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
           <folding />
         </state>
       </provider>
