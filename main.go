@@ -27,6 +27,7 @@ type Book struct {
 	Author string `db:"author"`
 	Classification string `db:"classification"`
 	ID string `db:"id"`
+	User string `db:"user"`
 }
 
 type User struct {
@@ -307,7 +308,12 @@ func main() {
 	//  delete book route
 	mux.HandleFunc("/books/{pk}", func(w http.ResponseWriter, r *http.Request) {
 		pk, _ := strconv.ParseInt(gmux.Vars(r)["pk"], 10, 64)
-		if _, err := dbmap.Delete(&Book{pk, "", "", "", ""}); err != nil {
+		//only allowed to delete books that belong to the user
+		var b Book
+		if err := dbmap.SelectOne(&b, "select * from books where pk=? and user=?", pk, getStringFromSession(r, "User")); err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+		}
+		if _, err := dbmap.Delete(&b); err != nil {
 
 		}
 		//if _, err := db.Exec("delete from books where pk=?", gmux.Vars(r)["pk"]); err != nil {
