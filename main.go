@@ -76,11 +76,18 @@ func verifyDatabase(w http.ResponseWriter, r *http.Request, next http.HandlerFun
 }
 
 //  implement initial sort
-func getBookCollections(books *[]Book, sortCol string, w http.ResponseWriter) bool {
-	if sortCol != "title" && sortCol != "author" && sortCol != "classification" {
+func getBookCollections(books *[]Book, sortCol string, filterByClass string, w http.ResponseWriter) bool {
+	if sortCol == "" {
 		sortCol = "pk" //set to default sorting by PK
 	}
-	if _, err := dbmap.Select(books, "select * from books order by " + sortCol); err != nil {
+	var where string
+	if filterByClass == "fiction" {
+		where = " where classification between '800' and '900'"
+	} else if filterByClass == "nonfiction" {
+		where = " where classification not between '800' and '900'"
+	}
+
+	if _, err := dbmap.Select(books, "select * from books" + where + " order by " + sortCol); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return false
 	}
@@ -103,7 +110,8 @@ func main() {
 	//  filter route
 	mux.HandleFunc("/books", func(w http.ResponseWriter, r *http.Request) {
 		var b []Book
-		if !getBookCollections(&b, r.FormValue("sortBy"), w) {
+		//  pass default sort preference to sort
+		if !getBookCollections(&b, getStringFromSession(r, "sortBy"), w) {
 			return
 		}
 
@@ -143,7 +151,7 @@ func main() {
 
 		p := Page{Books: []Book{}}
 		//  sort the book collection by sorting preference from session
-		if !getBookCollections(&p.Books, sortColumn, w) {
+		if !getBookCollections(&p.Books, getStringFromSession(r, "sortBy"), w) {
 			return
 		}
 
