@@ -11,6 +11,7 @@ import (
 	"io/ioutil"
 	"encoding/xml"
 	"strconv"
+	"golang.org/x/crypto/bcrypt"
 
 	//"github.com/codegangsta/negroni"
 	"github.com/urfave/negroni"
@@ -26,6 +27,11 @@ type Book struct {
 	Author string `db:"author"`
 	Classification string `db:"classification"`
 	ID string `db:"id"`
+}
+
+type User struct {
+	Username string `db:"username"`
+	Secret []byte `db:"secret"`
 }
 
 type Page struct {
