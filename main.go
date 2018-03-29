@@ -112,7 +112,7 @@ func getBookCollections(books *[]Book, sortCol string, filterByClass string, use
 	if sortCol == "" {
 		sortCol = "pk" //set to default sorting by PK
 	}
-	where := " where user=?"
+	where := " where \"user\"=" + dbmap.Dialect.BindVar(0)
 	if filterByClass == "fiction" {
 		where += " and classification between '800' and '900'"
 	} else if filterByClass == "nonfiction" {
@@ -305,16 +305,14 @@ func main() {
 		pk, _ := strconv.ParseInt(gmux.Vars(r)["pk"], 10, 64)
 		//only allowed to delete books that belong to the user
 		var b Book
-		if err := dbmap.SelectOne(&b, "select * from books where pk=? and user=?", pk, getStringFromSession(r, "User")); err != nil {
+		q := "select * from books where pk=" + dbmap.Dialect.BindVar(0) + " and \"user\"=" + dbmap.Dialect.BindVar(1)
+		if err := dbmap.SelectOne(&b, q, pk, getStringFromSession(r, "User")); err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 		}
 		if _, err := dbmap.Delete(&b); err != nil {
 
 		}
-		//if _, err := db.Exec("delete from books where pk=?", gmux.Vars(r)["pk"]); err != nil {
-		//	http.Error(w, err.Error(), http.StatusInternalServerError)
-		//	return
-		//}
+
 		w.WriteHeader(http.StatusOK)
 	}).Methods("DELETE")
 
@@ -323,8 +321,13 @@ func main() {
 	n.Use(negroni.HandlerFunc(verifyDatabase))
 	n.Use(negroni.HandlerFunc(verifyUser))
 	n.UseHandler(mux)
-	n.Run(":8080")
-	//fmt.Println(http.ListenAndServe(":8080", nil))
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+	n.Run(":" + port)
+
 }
 
 func find(id string) (ClassifyBookResponse, error) {
