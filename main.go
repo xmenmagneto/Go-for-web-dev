@@ -1,51 +1,50 @@
 package main
 
 import (
-	"net/http"
 	"database/sql"
-	_"github.com/mattn/go-sqlite3"
+	_ "github.com/mattn/go-sqlite3"
 	"gopkg.in/gorp.v1"
+	"net/http"
 
 	"encoding/json"
-	"net/url"
-	"io/ioutil"
 	"encoding/xml"
-	"strconv"
 	"golang.org/x/crypto/bcrypt"
+	"io/ioutil"
+	"net/url"
+	"strconv"
 
-	//"github.com/codegangsta/negroni"
-	"github.com/urfave/negroni"
 	"github.com/goincremental/negroni-sessions"
 	"github.com/goincremental/negroni-sessions/cookiestore"
-	"github.com/yosssi/ace"
 	gmux "github.com/gorilla/mux"
+	"github.com/urfave/negroni"
+	"github.com/yosssi/ace"
 )
 
 type Book struct {
-	PK int64 `db:"pk"`
-	Title string `db:"title"`
-	Author string `db:"author"`
+	PK             int64  `db:"pk"`
+	Title          string `db:"title"`
+	Author         string `db:"author"`
 	Classification string `db:"classification"`
-	ID string `db:"id"`
-	User string `db:"user"`
+	ID             string `db:"id"`
+	User           string `db:"user"`
 }
 
 type User struct {
 	Username string `db:"username"`
-	Secret []byte `db:"secret"`
+	Secret   []byte `db:"secret"`
 }
 
 type Page struct {
-	Books []Book
+	Books  []Book
 	Filter string
-	User string  //let UI know which user logged in
+	User   string //let UI know which user logged in
 }
 
 type SearchResult struct {
-	Title string `xml:"title,attr"`
+	Title  string `xml:"title,attr"`
 	Author string `xml:"author,attr"`
-	Year string `xml:"hyr,attr"`
-	ID string `xml:"owi,attr"`
+	Year   string `xml:"hyr,attr"`
+	ID     string `xml:"owi,attr"`
 }
 
 type ClassifySearchResponse struct {
@@ -54,9 +53,9 @@ type ClassifySearchResponse struct {
 
 type ClassifyBookResponse struct {
 	BookData struct {
-		Title string `xml:"title,attr"`
+		Title  string `xml:"title,attr"`
 		Author string `xml:"author,attr"`
-		ID string `xml:"owi,attr"`
+		ID     string `xml:"owi,attr"`
 	} `xml:"work"`
 	Classification struct {
 		MostPopular string `xml:"sfa,attr"`
@@ -71,8 +70,8 @@ func initDb() {
 
 	dbmap = &gorp.DbMap{Db: db, Dialect: gorp.SqliteDialect{}}
 
-	dbmap.AddTableWithName(Book{}, "books").SetKeys(true,"pk")
-	dbmap.AddTableWithName(User{}, "users").SetKeys(false,"username")
+	dbmap.AddTableWithName(Book{}, "books").SetKeys(true, "pk")
+	dbmap.AddTableWithName(User{}, "users").SetKeys(false, "username")
 	dbmap.CreateTablesIfNotExists()
 }
 
@@ -87,7 +86,7 @@ func verifyDatabase(w http.ResponseWriter, r *http.Request, next http.HandlerFun
 
 //  middleware to check user session is always set before allowing users to enter main page
 func verifyUser(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
-	if r.URL.Path == "/login" {  // avoid redirect loop
+	if r.URL.Path == "/login" { // avoid redirect loop
 		next(w, r)
 		return
 	}
@@ -112,7 +111,7 @@ func getBookCollections(books *[]Book, sortCol string, filterByClass string, use
 		where += " and classification not between '800' and '900'"
 	}
 
-	if _, err := dbmap.Select(books, "select * from books" + where + " order by " + sortCol, username); err != nil {
+	if _, err := dbmap.Select(books, "select * from books"+where+" order by "+sortCol, username); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return false
 	}
@@ -131,6 +130,7 @@ func getStringFromSession(r *http.Request, key string) string {
 type LoginPage struct {
 	Error string
 }
+
 func main() {
 	initDb()
 	mux := gmux.NewRouter()
@@ -142,7 +142,7 @@ func main() {
 			secret, _ := bcrypt.GenerateFromPassword([]byte(r.FormValue("password")), bcrypt.DefaultCost)
 			user := User{r.FormValue("username"), secret}
 			if err := dbmap.Insert(&user); err != nil {
-   				p.Error = err.Error()
+				p.Error = err.Error()
 			} else { // register successfully
 				sessions.GetSession(r).Set("User", user.Username)
 				http.Redirect(w, r, "/", http.StatusFound)
@@ -159,7 +159,7 @@ func main() {
 				u := user.(*User)
 				if err = bcrypt.CompareHashAndPassword(u.Secret, []byte(r.FormValue("password"))); err != nil {
 					p.Error = err.Error()
-				} else {  //authenticated successfully
+				} else { //authenticated successfully
 					sessions.GetSession(r).Set("User", u.Username)
 					http.Redirect(w, r, "/", http.StatusFound)
 					return
@@ -180,7 +180,7 @@ func main() {
 	//  logout route
 	mux.HandleFunc("/logout", func(w http.ResponseWriter, r *http.Request) {
 		sessions.GetSession(r).Set("User", nil)
-		sessions.GetSession(r).Set("Filter", nil)  //clear filter preference
+		sessions.GetSession(r).Set("Filter", nil) //clear filter preference
 
 		http.Redirect(w, r, "/login", http.StatusFound)
 	})
@@ -222,12 +222,10 @@ func main() {
 
 	//  root route
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		template, err := ace.Load("templates/index", "",nil)
+		template, err := ace.Load("templates/index", "", nil)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
-
-
 
 		p := Page{Books: []Book{}, Filter: getStringFromSession(r, "Filter"), User: getStringFromSession(r, "User")}
 		//  sort the book collection by sorting preference from session
@@ -242,9 +240,8 @@ func main() {
 
 	}).Methods("GET")
 
-
 	//  search books route
-	mux.HandleFunc("/search", func(w http.ResponseWriter, r *http.Request){
+	mux.HandleFunc("/search", func(w http.ResponseWriter, r *http.Request) {
 		var results []SearchResult
 		var err error
 
@@ -259,7 +256,6 @@ func main() {
 
 	}).Methods("POST")
 
-
 	//  add book route
 	mux.HandleFunc("/books", func(w http.ResponseWriter, r *http.Request) {
 		var book ClassifyBookResponse
@@ -268,8 +264,6 @@ func main() {
 		if book, err = find(r.FormValue("id")); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
-
-
 
 		//result, err := db.Exec("insert into books (pk, title, author, id, classification) values (?, ?, ?, ?, ?)",
 		//						nil, book.BookData.Title, book.BookData.Author, book.BookData.ID,
@@ -280,12 +274,12 @@ func main() {
 		//
 		//pk, _ := result.LastInsertId()
 		b := Book{
-			PK: -1, //gorp will populate this value once the book is inserted into database
-			Title: book.BookData.Title,
-			Author: book.BookData.Author,
+			PK:             -1, //gorp will populate this value once the book is inserted into database
+			Title:          book.BookData.Title,
+			Author:         book.BookData.Author,
 			Classification: book.Classification.MostPopular,
-			ID: r.FormValue("id"),
-			User: getStringFromSession(r, "User"),
+			ID:             r.FormValue("id"),
+			User:           getStringFromSession(r, "User"),
 		}
 		//insert and populate b
 		if dbmap.Insert(&b); err != nil {
@@ -336,7 +330,6 @@ func find(id string) (ClassifyBookResponse, error) {
 	err = xml.Unmarshal(body, &c)
 	return c, err
 }
-
 
 func search(query string) ([]SearchResult, error) {
 	var c ClassifySearchResponse
