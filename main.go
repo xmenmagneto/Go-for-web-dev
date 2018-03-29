@@ -84,6 +84,21 @@ func verifyDatabase(w http.ResponseWriter, r *http.Request, next http.HandlerFun
 	next(w, r)
 }
 
+//  middleware to check user session is always set before allowing users to enter main page
+func verifyUser(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
+	if r.URL.Path == "/login" {  // avoid redirect loop
+		next(w, r)
+		return
+	}
+	if username := getStringFromSession(r, "User"); username != "" {
+		if user, _ := dbmap.Get(User{}, username); user != nil {
+			next(w, r)
+			return
+		}
+	}
+	http.Redirect(w, r, "/login", http.StatusTemporaryRedirect)
+}
+
 //  implement initial sort
 func getBookCollections(books *[]Book, sortCol string, filterByClass string, w http.ResponseWriter) bool {
 	if sortCol == "" {
@@ -110,21 +125,6 @@ func getStringFromSession(r *http.Request, key string) string {
 		strVal = val.(string)
 	}
 	return strVal
-}
-
-//  middleware to check user session is always set before allowing users to enter main page
-func verifyUser(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
-	if r.URL.Path == "/login" {  // avoid redirect loop
-		next(w, r)
-		return
-	}
-	if username := getStringFromSession(r, "User"); username != "" {
-		if user, _ := dbmap.Get(User{}, username); user != nil {
-			next(w, r)
-			return
-		}
-	}
-	http.Redirect(w, r, "/login", http.StatusTemporaryRedirect)
 }
 
 type LoginPage struct {
@@ -320,6 +320,7 @@ func main() {
 	n := negroni.Classic()
 	n.Use(sessions.Sessions("go-for-web-dev", cookiestore.New([]byte("my-secret-123"))))
 	n.Use(negroni.HandlerFunc(verifyDatabase))
+	n.Use(negroni.HandlerFunc(verifyUser))
 	n.UseHandler(mux)
 	n.Run(":8080")
 	//fmt.Println(http.ListenAndServe(":8080", nil))
