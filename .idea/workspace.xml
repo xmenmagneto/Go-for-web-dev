@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0ddabfab-3269-4a11-a586-739bccd16d3c" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/main.go" afterPath="$PROJECT_DIR$/main.go" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -16,13 +17,13 @@
       <file leaf-file-name="main.go" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="326">
-              <caret line="94" column="64" lean-forward="false" selection-start-line="94" selection-start-column="64" selection-end-line="94" selection-end-column="64" />
+            <state relative-caret-position="177">
+              <caret line="96" column="18" lean-forward="false" selection-start-line="96" selection-start-column="18" selection-end-line="96" selection-end-column="18" />
               <folding>
                 <element signature="e#14#366#0" expanded="true" />
-                <marker date="1522283043000" expanded="true" signature="2787:2835" ph="select pk,ti... books" />
-                <marker date="1522283043000" expanded="true" signature="3905:3985" ph="insert into books... " />
-                <marker date="1522283043000" expanded="true" signature="4991:5019" ph="delete from books... " />
+                <marker date="1522283580000" expanded="true" signature="2939:2987" ph="select pk,ti... books" />
+                <marker date="1522283580000" expanded="true" signature="4057:4137" ph="insert into books... " />
+                <marker date="1522283580000" expanded="true" signature="5143:5171" ph="delete from books... " />
               </folding>
             </state>
           </provider>
@@ -89,7 +90,7 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="535" />
+    <option name="x" value="605" />
     <option name="y" value="23" />
     <option name="width" value="980" />
     <option name="height" value="709" />
@@ -272,15 +273,15 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1522190126164</updated>
-      <workItem from="1522190132438" duration="27758000" />
+      <workItem from="1522190132438" duration="28215000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="27758000" />
+    <option name="totallyTimeSpent" value="28215000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="535" y="23" width="980" height="709" extended-state="0" />
+    <frame x="605" y="23" width="980" height="709" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -358,13 +359,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="326">
-          <caret line="94" column="64" lean-forward="false" selection-start-line="94" selection-start-column="64" selection-end-line="94" selection-end-column="64" />
+        <state relative-caret-position="177">
+          <caret line="96" column="18" lean-forward="false" selection-start-line="96" selection-start-column="18" selection-end-line="96" selection-end-column="18" />
           <folding>
             <element signature="e#14#366#0" expanded="true" />
-            <marker date="1522283043000" expanded="true" signature="2787:2835" ph="select pk,ti... books" />
-            <marker date="1522283043000" expanded="true" signature="3905:3985" ph="insert into books... " />
-            <marker date="1522283043000" expanded="true" signature="4991:5019" ph="delete from books... " />
+            <marker date="1522283580000" expanded="true" signature="2939:2987" ph="select pk,ti... books" />
+            <marker date="1522283580000" expanded="true" signature="4057:4137" ph="insert into books... " />
+            <marker date="1522283580000" expanded="true" signature="5143:5171" ph="delete from books... " />
           </folding>
         </state>
       </provider>

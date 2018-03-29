@@ -74,24 +74,30 @@ func verifyDababase(w http.ResponseWriter, r *http.Request, next http.HandlerFun
 	next(w, r)
 }
 
+//  implement initial sort
+func getBookCollections(books *[]Book, sortCol string, w http.ResponseWriter) bool {
+	if sortCol != "title" && sortCol != "author" && sortCol != "classification" {
+		sortCol = "pk" //set to default sorting
+	}
+	if _, err := dbmap.Select(books, "select * from books order by " + sortCol); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return false
+	}
+	return true
+}
+
 func main() {
 	initDb()
 	mux := gmux.NewRouter()
 
 	//  sort route
 	mux.HandleFunc("/books", func(w http.ResponseWriter, r *http.Request) {
-		columnName := r.FormValue("sortBy")
-		if columnName != "title" && columnName != "author" && columnName != "classification" {
-			http.Error(w, "Invalid column name", http.StatusInternalServerError)
-			return
-		}
-
 		var b []Book
-		if _, err := dbmap.Select(&b, "select * from books order by " + columnName); err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+		if !getBookCollections(&b, r.FormValue("sortBy"), w) {
 			return
 		}
 
+		//store the sort preference in session
 		sessions.GetSession(r).Set("SortBy", r.FormValue("sortBy"))
 		if err := json.NewEncoder(w).Encode(b); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
