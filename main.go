@@ -176,6 +176,14 @@ func main() {
 		}
 	})
 
+	//  logout route
+	mux.HandleFunc("/logout", func(w http.ResponseWriter, r *http.Request) {
+		sessions.GetSession(r).Set("User", nil)
+		sessions.GetSession(r).Set("Filter", nil)  //clear filter preference
+
+		http.Redirect(w, r, "/login", http.StatusFound)
+	})
+
 	//  filter route
 	mux.HandleFunc("/books", func(w http.ResponseWriter, r *http.Request) {
 		var b []Book
