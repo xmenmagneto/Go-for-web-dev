@@ -18,7 +18,6 @@ import (
 	"github.com/goincremental/negroni-sessions/cookiestore"
 	"github.com/yosssi/ace"
 	gmux "github.com/gorilla/mux"
-	"fmt"
 )
 
 type Book struct {
@@ -100,7 +99,7 @@ func main() {
 		}
 
 		//  store the sort preference in session
-		//sessions.GetSession(r).Set("SortBy", r.FormValue("sortBy"))
+		sessions.GetSession(r).Set("SortBy", r.FormValue("sortBy"))
 		if err := json.NewEncoder(w).Encode(b); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
@@ -115,29 +114,29 @@ func main() {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
 
-		//var sortColumn string
-		////  get sort preference from session
-		//if sortBy := sessions.GetSession(r).Get("SortBy"); sortBy != nil {
-		//	sortColumn = sortBy.(string)
+		var sortColumn string
+		//  get sort preference from session
+		if sortBy := sessions.GetSession(r).Get("SortBy"); sortBy != nil {
+			sortColumn = sortBy.(string)
+		}
+
+		p := Page{Books: []Book{}}
+		//  sort the book collection by sorting preference from session
+		if !getBookCollections(&p.Books, sortColumn, w) {
+			return
+		}
+
+
+		//rows, err := db.Query("select pk,title,author,classification from books")
+		//if err != nil {
+		//	fmt.Print(err)
 		//}
 		//
-		p := Page{Books: []Book{}}
-		////  sort the book collection by sorting preference from session
-		//if !getBookCollections(&p.Books, sortColumn, w) {
-		//	return
+		//for rows.Next() {
+		//	var b Book
+		//	rows.Scan(&b.PK, &b.Title, &b.Author, &b.Classification)
+		//	p.Books = append(p.Books, b)
 		//}
-
-
-		rows, err := db.Query("select pk,title,author,classification from books")
-		if err != nil {
-			fmt.Print(err)
-		}
-
-		for rows.Next() {
-			var b Book
-			rows.Scan(&b.PK, &b.Title, &b.Author, &b.Classification)
-			p.Books = append(p.Books, b)
-		}
 
 		if err = template.Execute(w, p); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
