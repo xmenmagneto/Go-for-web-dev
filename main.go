@@ -70,6 +70,7 @@ func initDb() {
 	dbmap = &gorp.DbMap{Db: db, Dialect: gorp.SqliteDialect{}}
 
 	dbmap.AddTableWithName(Book{}, "books").SetKeys(true,"pk")
+	dbmap.AddTableWithName(User{}, "users").SetKeys(false,"username")
 	dbmap.CreateTablesIfNotExists()
 }
 
@@ -110,21 +111,35 @@ func getStringFromSession(r *http.Request, key string) string {
 	return strVal
 }
 
+type LoginPage struct {
+	Error string
+}
 func main() {
 	initDb()
 	mux := gmux.NewRouter()
 
 	//  login route
 	mux.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
-		if r.FormValue("register") != "" || r.FormValue("login") != "" {
+		var p LoginPage
+		if r.FormValue("register") != "" {
+			secret, _ := bcrypt.GenerateFromPassword([]byte(r.FormValue("password")), bcrypt.DefaultCost)
+			user := User{r.FormValue("usernma"), secret}
+			if err := dbmap.Insert(&user); err != nil {
+   				p.Error = err.Error()
+			} else { // register successfully
+				http.Redirect(w, r, "/", http.StatusFound)
+				return
+			}
+		} else if r.FormValue("login") != "" {
 			http.Redirect(w, r, "/", http.StatusFound)
+			return
 		}
 		template, err := ace.Load("templates/login", "", nil)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
-		if err = template.Execute(w, nil); err != nil {
+		if err = template.Execute(w, p); err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
