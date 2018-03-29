@@ -111,6 +111,17 @@ func getStringFromSession(r *http.Request, key string) string {
 	return strVal
 }
 
+//  middleware to check user session is always set before allowing users to enter main page
+func verifyUser(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
+	if username := getStringFromSession(r, "User"); username != "" {
+		if user, _ := dbmap.Get(User{}, username); user != nil {
+			next(w, r)
+			return
+		}
+	}
+	http.Redirect(w, r, "/login", http.StatusTemporaryRedirect)
+}
+
 type LoginPage struct {
 	Error string
 }

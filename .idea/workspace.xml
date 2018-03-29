@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0ddabfab-3269-4a11-a586-739bccd16d3c" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/main.go" afterPath="$PROJECT_DIR$/main.go" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -16,11 +17,11 @@
       <file leaf-file-name="main.go" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="292">
-              <caret line="146" column="56" lean-forward="true" selection-start-line="146" selection-start-column="56" selection-end-line="146" selection-end-column="56" />
+            <state relative-caret-position="304">
+              <caret line="115" column="4" lean-forward="false" selection-start-line="115" selection-start-column="4" selection-end-line="115" selection-end-column="4" />
               <folding>
                 <element signature="e#14#427#0" expanded="true" />
-                <marker date="1522345670000" expanded="true" signature="5787:5835" ph="select pk,ti... books" />
+                <marker date="1522345839000" expanded="true" signature="5962:6010" ph="select pk,ti... books" />
               </folding>
             </state>
           </provider>
@@ -91,8 +92,8 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="480" />
-    <option name="y" value="24" />
+    <option name="x" value="560" />
+    <option name="y" value="23" />
     <option name="width" value="836" />
     <option name="height" value="709" />
   </component>
@@ -274,15 +275,15 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1522190126164</updated>
-      <workItem from="1522190132438" duration="38301000" />
+      <workItem from="1522190132438" duration="38458000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="38301000" />
+    <option name="totallyTimeSpent" value="38458000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="480" y="24" width="836" height="709" extended-state="0" />
+    <frame x="560" y="23" width="836" height="709" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -384,11 +385,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="292">
-          <caret line="146" column="56" lean-forward="true" selection-start-line="146" selection-start-column="56" selection-end-line="146" selection-end-column="56" />
+        <state relative-caret-position="304">
+          <caret line="115" column="4" lean-forward="false" selection-start-line="115" selection-start-column="4" selection-end-line="115" selection-end-column="4" />
           <folding>
             <element signature="e#14#427#0" expanded="true" />
-            <marker date="1522345670000" expanded="true" signature="5787:5835" ph="select pk,ti... books" />
+            <marker date="1522345839000" expanded="true" signature="5962:6010" ph="select pk,ti... books" />
           </folding>
         </state>
       </provider>
