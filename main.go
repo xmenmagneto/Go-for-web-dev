@@ -123,7 +123,7 @@ func main() {
 		var p LoginPage
 		if r.FormValue("register") != "" {
 			secret, _ := bcrypt.GenerateFromPassword([]byte(r.FormValue("password")), bcrypt.DefaultCost)
-			user := User{r.FormValue("usernma"), secret}
+			user := User{r.FormValue("username"), secret}
 			if err := dbmap.Insert(&user); err != nil {
    				p.Error = err.Error()
 			} else { // register successfully
@@ -131,8 +131,21 @@ func main() {
 				return
 			}
 		} else if r.FormValue("login") != "" {
-			http.Redirect(w, r, "/", http.StatusFound)
-			return
+			user, err := dbmap.Get(User{}, r.FormValue("username"))
+			if err != nil {
+				p.Error = err.Error()
+			} else if user == nil {
+				p.Error = "No such user found with Username: " + r.FormValue("username")
+			} else {
+				//perform hard cast on the object returned from database
+				u := user.(*User)
+				if err = bcrypt.CompareHashAndPassword(u.Secret, []byte(r.FormValue("password"))); err != nil {
+					p.Error = err.Error()
+				} else {  //authenticated successfully
+					http.Redirect(w, r, "/", http.StatusFound)
+					return
+				}
+			}
 		}
 		template, err := ace.Load("templates/login", "", nil)
 		if err != nil {
